@@ -1,3 +1,65 @@
-body {
-    background-color: #ddd;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*=================================================
+            TOTAL SECTION
+==================================================*/
+
+#total {
+    background-color: #475461;
+    padding: 40px 0 60px 0;
+    color: #fff;
+}
+
+.title {
+    width: 900px;
+    margin: 0 auto 20px auto;
+}
+.title h1 {
+    font-size: 40px;
+    font-family: 'Lusitana', serif;
+    font-weight: bold;
+}
+.total {
+    width: 350px;
+    margin: 0 auto;
+    text-align: center;
+}
+.total h3 {
+    font-size: 16px;
+    font-weight: 400px;
+}
+.total > p {
+    font-size: 50px;
+    padding: 15px 0;
+}
+.display-income {
+    padding: 10px;
+    margin: 10px 0;
+}
+.total-income-title {
+    float: left;
+}
+.total-income-amount {
+    float: right;
+}
+.total .income {
+    background-color: #4ad3aa;
+}
+.total .expenses {
+    background-color: #f25454;
+}
+
+/*=================================================
+            CLEAR FIX
+==================================================*/
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
 }
