@@ -8,6 +8,9 @@
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Lusitana:700|Open+Sans:400,600,700" rel="stylesheet">
 
+        <!-- ionicons CSS -->
+        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
         <!-- Custom CSS -->
         <link rel="stylesheet" href="style.css">
 
@@ -30,6 +33,15 @@
                     <p class="total-income-amount">- 576.34</p>
                 </div>
             </div>
+        </section>
+        <section id="form-values">
+            <select class="form-control" id="type">
+                <option value="income" selected>+</option>
+                <option value="expense">-</option>
+            </select>
+            <input type="text" class="form-control" id="description" value="" placeholder="ADD DESCRIPTION">
+            <input type="number" class="form-control" id="amount" value="" placeholder="AMOUNT">
+            <button id="add_button" class="form-control">ADD</button>
         </section>
 
         <!-- Application scripts -->
