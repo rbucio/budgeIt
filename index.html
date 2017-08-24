@@ -41,7 +41,35 @@
             </select>
             <input type="text" class="form-control" id="description" value="" placeholder="ADD DESCRIPTION">
             <input type="number" class="form-control" id="amount" value="" placeholder="AMOUNT">
-            <button id="add_button" class="form-control">ADD</button>
+            <button id="add-button" class="form-control">ADD</button>
+        </section>
+        <section id="display-list-container">
+            <div class="display-column group">
+                <h3 class="income-color">INCOME</h3>
+                <div id="income-list">
+                    <div class="list-item group">
+                        <p class="list-item-description">Some description</p>
+                        <p class="list-item-amount income-color">+1,304.90 <span><i class="ion-trash-a icon"></i></span></p>
+                    </div>
+                    <div class="list-item group">
+                        <p class="list-item-description">Example of a description</p>
+                        <p class="list-item-amount income-color">+2,344.90 <span><i class="ion-trash-a icon"></i></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="display-column">
+                <h3 class="expenses-color">EXPENSES</h3>
+                <div id="expenses-list">
+                    <div class="list-item group">
+                        <p class="list-item-description">Some description</p>
+                        <p class="list-item-amount expenses-color">+1,304.90 <span><i class="ion-trash-a icon"></i></span></p>
+                    </div>
+                    <div class="list-item group">
+                        <p class="list-item-description">Example of a description</p>
+                        <p class="list-item-amount expenses-color">+2,344.90 <span><i class="ion-trash-a icon"></i></span></p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Application scripts -->

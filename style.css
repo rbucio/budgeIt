@@ -5,6 +5,14 @@
     font-family: 'Open Sans', sans-serif;
 }
 
+.income-color {
+    color: #4ad3aa;
+}
+
+.expenses-color {
+    color: #f25454;
+}
+
 /*=================================================
             TOTAL SECTION
 ==================================================*/
@@ -60,7 +68,7 @@
 ==================================================*/
 
 #form-values {
-    background-color: #d3d3d3;
+    background-color: #f2f2f2;
     padding: 10px 0;
     text-align: center;
 }
@@ -89,18 +97,58 @@ select {
     width: 100px;
 }
 
-#add_button {
+#add-button {
     padding: 8px 25px;
     background-color: #898989;
     color: #fff;
 }
-#add_button:hover {
+#add-button:hover {
     cursor: pointer;
 }
 
 select, .form-control {
     outline: none;
 }
+
+/*=================================================
+            DISPLAY LISTS SECTION
+==================================================*/
+
+#display-list-container {
+    width: 900px;
+    margin: 75px auto;
+}
+
+.display-column {
+    width: 50%;
+    float: left;
+    padding: 0 25px;
+}
+.display-column h3 {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #c4c4c4;
+}
+.display-column hr {
+    border-bottom: 1px solid #c4c4c4;
+}
+.list-item-description {
+    float: left;
+}
+.list-item-amount {
+    float: right;
+}
+.list-item {
+    padding: 10px;
+    border-bottom: 1px solid #c4c4c4;
+}
+.list-item:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.list-item .icon {
+    font-size: 18px;
+    margin-left: 5px;
+}
+
 
 /*=================================================
             CLEAR FIX
