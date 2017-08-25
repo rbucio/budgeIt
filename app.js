@@ -47,9 +47,6 @@ var budgetController = (function() {
             data.allItems[type].push(newItem);
             return newItem;
 
-        },
-        test: function() {
-            console.log(data);
         }
     };
 
@@ -63,7 +60,9 @@ var UIController = (function() {
         inputType: '#type',
         inputDescription: '#description',
         inputAmount: '#amount',
-        inputButton: '#add-button'
+        inputButton: '#add-button',
+        incomeContainer: '#income-list',
+        expensesContainer: '#expenses-list'
     }
 
     return {
@@ -73,6 +72,34 @@ var UIController = (function() {
                 description: document.querySelector(DOMstrings.inputDescription).value,
                 amount: document.querySelector(DOMstrings.inputAmount).value
             }
+        },
+        addListItem: function(obj, type) {
+
+            var html, newHTML, container;
+
+            // Create HTML string with placeholder text
+            if ( type === 'inc') {
+
+                container = DOMstrings.incomeContainer;
+
+                html ='<div class="list-item group" id="income-%id%"><p class="list-item-description">%description%</p><p class="list-item-amount income-color">%amount% <span><i class="ion-trash-a icon"></i></span></p></div>'
+
+            } else if ( type === 'exp') {
+
+                container = DOMstrings.expensesContainer;
+
+                html = '<div class="list-item group" id="expense-%id%"><p class="list-item-description">%description%</p><p class="list-item-amount expenses-color">%amount% <span><i class="ion-trash-a icon"></i></span></p></div>'
+
+            }
+
+            // Replace the placeholder text with the actual data
+            newHTML = html.replace('%id%', obj.id);
+            newHTML = newHTML.replace('%description%', obj.description);
+            newHTML = newHTML.replace('%amount%', obj.amount);
+
+            // Insert the HTML into the DOM
+            document.querySelector(container).insertAdjacentHTML('beforeend', newHTML);
+
         },
         getDOMstrings: function() {
             return DOMstrings;
@@ -112,6 +139,7 @@ var controller = (function(budgetCtrl, UICtrl) {
         newItem = budgetCtrl.addItem(input.type, input.description, input.amount);
 
         //3. Add the item to the UI
+        UICtrl.addListItem(newItem, input.type);
 
         //4. Calculate the budget
 
