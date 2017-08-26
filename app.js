@@ -58,6 +58,19 @@ var budgetController = (function() {
             return newItem;
 
         },
+        deleteItem: function(type, id) {
+
+            var ids = data.allItems[type].map(function(current) {
+                return current.id;
+            });
+
+            index = ids.indexOf(id);
+
+            if (index !== -1) {
+                data.allItems[type].splice(index, 1);
+            }
+
+        },
         calculateBudget: function() {
             // calculate total income and exprenses
             calculateTotal('exp');
@@ -96,7 +109,8 @@ var UIController = (function() {
         incomeLabel: '#income',
         expensesLabel: '#expenses',
         monthLabel: '#month',
-        yearLabel: '#year'
+        yearLabel: '#year',
+        container: '#display-list-container'
     }
 
     return {
@@ -116,13 +130,13 @@ var UIController = (function() {
 
                 container = DOMstrings.incomeContainer;
 
-                html ='<div class="list-item group" id="income-%id%"><p class="list-item-description">%description%</p><p class="list-item-amount income-color">%amount% <span><i class="ion-trash-a icon"></i></span></p></div>'
+                html ='<div class="list-item group" id="inc-%id%"><p class="list-item-description">%description%</p><p class="list-item-amount income-color">%amount% <span><i class="ion-trash-a icon"></i></span></p></div>'
 
             } else if ( type === 'exp') {
 
                 container = DOMstrings.expensesContainer;
 
-                html = '<div class="list-item group" id="expense-%id%"><p class="list-item-description">%description%</p><p class="list-item-amount expenses-color">%amount% <span><i class="ion-trash-a icon"></i></span></p></div>'
+                html = '<div class="list-item group" id="exp-%id%"><p class="list-item-description">%description%</p><p class="list-item-amount expenses-color">%amount% <span><i class="ion-trash-a icon"></i></span></p></div>'
 
             }
 
@@ -133,6 +147,12 @@ var UIController = (function() {
 
             // Insert the HTML into the DOM
             document.querySelector(container).insertAdjacentHTML('beforeend', newHTML);
+
+        },
+        deleteListItem: function(selectorId) {
+
+            var element = document.getElementById(selectorId);
+            element.parentNode.removeChild(element);
 
         },
         clearFields: function() {
@@ -155,7 +175,7 @@ var UIController = (function() {
             document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
             document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
         },
-        displayMonth: function() {
+        displayDate: function() {
             var now, months, month, year;
             now = new Date();
 
@@ -186,6 +206,8 @@ var controller = (function(budgetCtrl, UICtrl) {
         var DOM = UICtrl.getDOMstrings();
 
         document.querySelector(DOM.inputButton).addEventListener('click', ctrlAddItem);
+
+        document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
 
         window.addEventListener('keypress', function(e) {
 
@@ -233,15 +255,44 @@ var controller = (function(budgetCtrl, UICtrl) {
             updateBudget();
 
         }
+    };
 
-        //6. Display the budget on the UI
-        console.log(input);
+    var ctrlDeleteItem = function(e) {
+
+        var itemId, splitId, type, id;
+
+        // traverse to parent element where id is at
+        itemId = e.target.parentNode.parentNode.parentNode.id;
+
+        if(itemId) {
+
+            splitId = itemId.split('-');
+            type = splitId[0];
+            id = parseInt(splitId[1]);
+
+            console.log(type, id);
+
+            // 1. delete the item from the data structure
+            budgetCtrl.deleteItem(type, id);
+
+            // 2. Delete the item from the UI
+            UICtrl.deleteListItem(itemId);
+
+            // 3. Update and show the new budget
+            updateBudget();
+        }
+
     };
 
     return {
         init: function() {
             setUpEventListeners();
-            UICtrl.displayMonth();
+            UICtrl.displayBudget({
+                budget: 0,
+                totalInc: 0,
+                totalExp: 0
+            });
+            UICtrl.displayDate();
         }
     };
 
