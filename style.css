@@ -100,7 +100,7 @@ select {
 
 #add-button {
     padding: 8px 25px;
-    background-color: #898989;
+    background-color: #475461;
     color: #fff;
 }
 #add-button:hover {
@@ -141,9 +141,6 @@ select, .form-control {
 .list-item {
     padding: 10px;
     border-bottom: 1px solid #c4c4c4;
-}
-.list-item:nth-child(even) {
-    background-color: #f2f2f2;
 }
 .list-item .icon {
     font-size: 18px;

@@ -86,9 +86,6 @@ var budgetController = (function() {
                 totalInc: data.total.inc,
                 totalExp: data.total.exp
             }
-        },
-        test: function() {
-            console.log(data);
         }
     };
 
@@ -303,8 +300,6 @@ var controller = (function(budgetCtrl, UICtrl) {
             splitId = itemId.split('-');
             type = splitId[0];
             id = parseInt(splitId[1]);
-
-            console.log(type, id);
 
             // 1. delete the item from the data structure
             budgetCtrl.deleteItem(type, id);
