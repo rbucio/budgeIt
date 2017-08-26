@@ -13,6 +13,15 @@ var budgetController = (function() {
         this.amount = amount;
     };
 
+    var calculateTotal = function(type) {
+        var sum = 0;
+        data.allItems[type].forEach(function(current) {
+            sum += current.amount;
+        });
+        data.total[type] = sum;
+    };
+
+
     var data = {
         allItems: {
             exp: [],
@@ -21,7 +30,8 @@ var budgetController = (function() {
         total: {
             exp: 0,
             inc: 0
-        }
+        },
+        budget: 0
     }
 
     return {
@@ -48,6 +58,22 @@ var budgetController = (function() {
             return newItem;
 
         },
+        calculateBudget: function() {
+            // calculate total income and exprenses
+            calculateTotal('exp');
+            calculateTotal('inc');
+
+            // calculate the budget: income - expenses
+            data.budget = data.total.inc - data.total.exp;
+
+        },
+        getBudget: function() {
+            return {
+                budget: data.budget,
+                totalInc: data.total.inc,
+                totalExp: data.total.exp
+            }
+        },
         test: function() {
             console.log(data);
         }
@@ -65,7 +91,12 @@ var UIController = (function() {
         inputAmount: '#amount',
         inputButton: '#add-button',
         incomeContainer: '#income-list',
-        expensesContainer: '#expenses-list'
+        expensesContainer: '#expenses-list',
+        budgetLabel: '#total-budget',
+        incomeLabel: '#income',
+        expensesLabel: '#expenses',
+        monthLabel: '#month',
+        yearLabel: '#year'
     }
 
     return {
@@ -119,6 +150,24 @@ var UIController = (function() {
             fieldsArr[0].focus();
 
         },
+        displayBudget: function(obj) {
+            document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
+            document.querySelector(DOMstrings.incomeLabel).textContent = obj.totalInc;
+            document.querySelector(DOMstrings.expensesLabel).textContent = obj.totalExp;
+        },
+        displayMonth: function() {
+            var now, months, month, year;
+            now = new Date();
+
+            year = now.getFullYear();
+
+            months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+            month = now.getMonth();
+
+            document.querySelector(DOMstrings.monthLabel).textContent = months[month];
+            document.querySelector(DOMstrings.yearLabel).textContent = year;
+        },
         getDOMstrings: function() {
 
             return DOMstrings;
@@ -151,10 +200,13 @@ var controller = (function(budgetCtrl, UICtrl) {
     var updateBudget = function() {
 
         //1. Calculate the budget
+        budgetCtrl.calculateBudget();
 
         //2. Return the budget
+        var budget = budgetCtrl.getBudget();
 
         //3.Display the budget on UI
+        UICtrl.displayBudget(budget);
 
     }
 
@@ -165,16 +217,22 @@ var controller = (function(budgetCtrl, UICtrl) {
         //1. Get input data
         input = UICtrl.getInput();
 
-        //2. Add the item to the budget controller
-        newItem = budgetCtrl.addItem(input.type, input.description, input.amount);
+        // Check for empty fields
+        if (input.description !== "" && !isNaN(input.amount) && input.amount > 0) {
 
-        //3. Add the item to the UI
-        UICtrl.addListItem(newItem, input.type);
+            //2. Add the item to the budget controller
+            newItem = budgetCtrl.addItem(input.type, input.description, input.amount);
 
-        //4. Clear fields
-        UICtrl.clearFields();
+            //3. Add the item to the UI
+            UICtrl.addListItem(newItem, input.type);
 
-        //5. Calculate the budget
+            //4. Clear fields
+            UICtrl.clearFields();
+
+            //5. Calculate and update budget
+            updateBudget();
+
+        }
 
         //6. Display the budget on the UI
         console.log(input);
@@ -183,6 +241,7 @@ var controller = (function(budgetCtrl, UICtrl) {
     return {
         init: function() {
             setUpEventListeners();
+            UICtrl.displayMonth();
         }
     };
 
