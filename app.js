@@ -118,7 +118,6 @@ var UIController = (function() {
         + or - before number
         exactly 2 decimal points
         comma separating the thousands
-
         2310.4567 -> + 2,310.46
         */
 
@@ -203,8 +202,8 @@ var UIController = (function() {
             obj.budget > 0 ? type = 'inc' : type = 'exp';
 
             document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(obj.budget, type);
-            document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(obj.budget, 'inc');
-            document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(obj.budget, 'exp');
+            document.querySelector(DOMstrings.incomeLabel).textContent = formatNumber(obj.totalInc, 'inc');
+            document.querySelector(DOMstrings.expensesLabel).textContent = formatNumber(obj.totalExp, 'exp');
         },
         displayDate: function() {
             var now, months, month, year;
